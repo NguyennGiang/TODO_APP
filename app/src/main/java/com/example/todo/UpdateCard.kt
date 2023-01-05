@@ -1,9 +1,8 @@
 package com.example.todo
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract.Data
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_update_card.*
 
 class UpdateCard : AppCompatActivity() {
@@ -11,25 +10,36 @@ class UpdateCard : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_card)
 
-        val pos = intent.getIntExtra("id", -1)
-        if (pos != -1){
-            val title = DataObject.getData(pos).title
-            val priority = DataObject.getData(pos).priority
+        val id = intent.getStringExtra("id")
+//        Toast.makeText(this, "$pos", Toast.LENGTH_LONG).show()
+        if(id != null){
+            val title = DataObject.getData(id).title
+            val priority = DataObject.getData(id).priority
+
             create_title.setText(title)
             create_priority.setText(priority)
 
             delete_button.setOnClickListener {
-                DataObject.deleteData(pos)
+                val db = DBHelper(this, null)
+                DataObject.deleteData(id)
+                db.deleteTask(id)
                 myIntent()
             }
 
-            update_button.setOnClickListener {
-                DataObject.updateData(pos,
-                    create_title.text.toString(),
-                    create_priority.text.toString())
-                myIntent()
-            }
-
+        update_button.setOnClickListener {
+            val db = DBHelper(this, null)
+            DataObject.updateData(
+                id,
+                create_title.text.toString(),
+                create_priority.text.toString()
+            )
+            db.updateTask(
+                id,
+                create_title.text.toString(),
+                create_priority.text.toString()
+            )
+            myIntent()
+        }
         }
     }
 

@@ -13,7 +13,6 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
         db = DBHelper(this, null)
         DataObject.listdata = db.getTasks() as MutableList<CardInfo>
 

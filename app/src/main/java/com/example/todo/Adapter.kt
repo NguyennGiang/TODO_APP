@@ -32,7 +32,7 @@ class Adapter(var data: List<CardInfo>) : RecyclerView.Adapter<Adapter.viewHolde
         holder.priority.text = data[position].priority
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, UpdateCard::class.java)
-            intent.putExtra("id", position)
+            intent.putExtra("id", data[position].id)
             holder.itemView.context.startActivity(intent)
         }
 

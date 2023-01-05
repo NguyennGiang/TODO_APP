@@ -4,30 +4,32 @@ package com.example.todo
 object DataObject {
     var listdata = mutableListOf<CardInfo>()
 
-    fun setData(title: String, priority: String) {
-        listdata.add(CardInfo(title, priority))
+    fun setData(task: CardInfo) {
+        listdata.add(task)
     }
 
     fun getAllData(): List<CardInfo> {
         return listdata
     }
 
-    fun deleteAll(){
+    fun deleteAll() {
         listdata.clear()
     }
 
-    fun getData(pos:Int): CardInfo {
-        return listdata[pos]
+    fun getData(id: String): CardInfo {
+        val task = listdata.find { it.id == id }
+        return task!!
     }
 
-    fun deleteData(pos:Int){
-        listdata.removeAt(pos)
+    fun deleteData(id: String) {
+        listdata.removeIf { it.id == id }
     }
 
-    fun updateData(pos:Int,title:String,priority:String)
-    {
-        listdata[pos].title=title
-        listdata[pos].priority=priority
+    fun updateData(id: String, title: String, priority: String) {
+        val tmp = listdata.find { it.id == id }
+        val id = listdata.indexOf(tmp)
+        listdata[id].title = title
+        listdata[id].priority = priority
     }
 
 }
